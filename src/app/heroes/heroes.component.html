@@ -1,0 +1,13 @@
+<!--Data binding to the new hero property and formatting to upercase with pipe-->
+<!--Pipes are a good way to format strings, currency amounts, dates and other display 
+  data. Angular ships with several built-in pipes and you can create your own.-->
+<div>
+  <label>name:
+    <!--[(ngModel)] is Angular's two-way data binding syntax-->
+    <!--this allows data to flow in both directions: from the hero.name property to the
+    textbox, and from the textbox back to the hero.name.-->
+    <input [(ngModel)]="hero.name" placeholder="name"/>
+  </label>
+</div>
+<div><span>id:  </span>{{hero.id}}</div>
+<div><span>name: </span>{{hero.name}}</div>
