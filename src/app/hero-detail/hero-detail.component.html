@@ -1,0 +1,12 @@
+<div *ngIf="hero">
+  <h2>{{hero.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{hero.id}}</div>
+  <div>
+    <label>name:
+      <!--[(ngModel)] is Angular's two-way data binding syntax-->
+      <!--this allows data to flow in both directions: from the hero.name property to the
+        textbox, and from the textbox back to the hero.name.-->
+      <input [(ngModel)]="hero.name" placeholder="name" />
+    </label>
+  </div>
+</div>

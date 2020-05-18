@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero';
-import { HEROES } from '../mock-heroes';
+import { HeroService } from '../hero.service';
 
 //@Component is a decorator function that specifies the Angular metadata for the component
 @Component({
@@ -24,15 +24,29 @@ export class HeroesComponent implements OnInit {
   }
 
   //exposing HEROES array for binding
-  heroes = HEROES;
+  heroes: Hero[];
 
-  constructor() { 
+  constructor(private heroService: HeroService) { 
     
+  }
+
+  getHeroes(): void {
+    this.heroService.getHeroes()
+      //The subscribe() method passes the emitted array to the callback, which sets the component's
+      // heroes property
+      .subscribe(heroes => this.heroes = heroes);
   }
 
   //Lifecycle method that is called shortly after creating the component.
   // Good place to put initialization logic.
   ngOnInit() {
+    this.getHeroes();
   }
 
 }
+
+// Reserve the Constructor for simple initialization such as wiring constructor parameters to properties.
+//  The constructor shouldn't do anything. It certainly shouldn't call a function that makes HTTP requests 
+//  to a remote server as a real data serviice would.
+//Instead, call getHeroes() inside the ngOnInit lifecycle hook and let Angular call ngOnInit() at an appropriate 
+//  time after constructing a HeroesComponent Instance.
