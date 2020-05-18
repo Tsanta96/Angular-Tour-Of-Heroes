@@ -18,23 +18,15 @@ import { MessageService } from '../message.service';
 })
 
 export class HeroesComponent implements OnInit {
-  //Adding a hero property of type Hero to the HeroesComponent for a hero named "Windstorm."
-  selectedHero: Hero;
-
   //exposing HEROES array for binding
   heroes: Hero[];
 
-  constructor(private heroService: HeroService, private messageService: MessageService) { }
+  constructor(private heroService: HeroService) { }
 
   //Lifecycle method that is called shortly after creating the component.
   // Good place to put initialization logic.
   ngOnInit() {
     this.getHeroes();
-  }
-
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-    this.messageService.add('HeroService: Selected hero id=${hero.id}')
   }
 
   getHeroes(): void {
