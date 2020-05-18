@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
+import { MessageService } from '../message.service';
 
 //@Component is a decorator function that specifies the Angular metadata for the component
 @Component({
@@ -19,15 +20,21 @@ import { HeroService } from '../hero.service';
 export class HeroesComponent implements OnInit {
   //Adding a hero property of type Hero to the HeroesComponent for a hero named "Windstorm."
   selectedHero: Hero;
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-  }
 
   //exposing HEROES array for binding
   heroes: Hero[];
 
-  constructor(private heroService: HeroService) { 
-    
+  constructor(private heroService: HeroService, private messageService: MessageService) { }
+
+  //Lifecycle method that is called shortly after creating the component.
+  // Good place to put initialization logic.
+  ngOnInit() {
+    this.getHeroes();
+  }
+
+  onSelect(hero: Hero): void {
+    this.selectedHero = hero;
+    this.messageService.add('HeroService: Selected hero id=${hero.id}')
   }
 
   getHeroes(): void {
@@ -36,13 +43,6 @@ export class HeroesComponent implements OnInit {
       // heroes property
       .subscribe(heroes => this.heroes = heroes);
   }
-
-  //Lifecycle method that is called shortly after creating the component.
-  // Good place to put initialization logic.
-  ngOnInit() {
-    this.getHeroes();
-  }
-
 }
 
 // Reserve the Constructor for simple initialization such as wiring constructor parameters to properties.
