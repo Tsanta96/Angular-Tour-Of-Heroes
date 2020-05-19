@@ -7,21 +7,20 @@ import { MessageService } from '../message.service';
 @Component({
   //The CSS element selector 'app-heroes', matches the name of the HTML element that identifies
   // this component within a parent components template
-  selector: 'app-heroes',
-  templateUrl: './heroes.component.html',
+  selector: "app-heroes",
+  templateUrl: "./heroes.component.html",
 
-  //Styles and stylesheets identified in @Component metadata are scoped to that 
-  // specific component. The heroes.component.css styles apply only to the HeroesComponent 
+  //Styles and stylesheets identified in @Component metadata are scoped to that
+  // specific component. The heroes.component.css styles apply only to the HeroesComponent
   // and don't affect the outer HTML or the HTML in any other component.
   // styles: [], // Can define styles inline with this
-  styleUrls: ['./heroes.component.css']
+  styleUrls: ["./heroes.component.css"],
 })
-
 export class HeroesComponent implements OnInit {
   //exposing HEROES array for binding
   heroes: Hero[];
 
-  constructor(private heroService: HeroService) { }
+  constructor(private heroService: HeroService) {}
 
   //Lifecycle method that is called shortly after creating the component.
   // Good place to put initialization logic.
@@ -29,11 +28,27 @@ export class HeroesComponent implements OnInit {
     this.getHeroes();
   }
 
+  add(name: string): void {
+    name = name.trim();
+    if (!name) {
+      return;
+    }
+    this.heroService.addHero({ name } as Hero).subscribe((hero) => {
+      this.heroes.push(hero);
+    });
+  }
+
+  delete(hero: Hero): void {
+    this.heroes = this.heroes.filter((h) => h !== hero);
+    this.heroService.deleteHero(hero).subscribe();
+  }
+
   getHeroes(): void {
-    this.heroService.getHeroes()
+    this.heroService
+      .getHeroes()
       //The subscribe() method passes the emitted array to the callback, which sets the component's
       // heroes property
-      .subscribe(heroes => this.heroes = heroes);
+      .subscribe((heroes) => (this.heroes = heroes));
   }
 }
 
